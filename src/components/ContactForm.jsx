@@ -1,0 +1,293 @@
+import { useState } from 'react';
+import { Send } from 'lucide-react';
+import { clearWizardStatus } from '../utils/localStorage';
+
+const ContactForm = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        phone: '',
+        serviceType: '',
+        message: '',
+    });
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const serviceTypes = [
+        'Plomería',
+        'Eléctrico',
+        'Construcción',
+        'HVAC',
+        'Pintura',
+        'Reparación de Emergencia',
+        'Otro',
+    ];
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        // Clear error when user starts typing
+        if (errors[name]) {
+            setErrors({ ...errors, [name]: '' });
+        }
+    };
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (!formData.name.trim()) {
+            newErrors.name = 'El nombre es requerido';
+        }
+
+        if (!formData.phone.trim()) {
+            newErrors.phone = 'El número de teléfono es requerido';
+        } else if (!/^\+?[\d\s\-()]+$/.test(formData.phone)) {
+            newErrors.phone = 'Por favor ingresa un número de teléfono válido';
+        }
+
+        if (!formData.serviceType) {
+            newErrors.serviceType = 'Por favor selecciona un tipo de servicio';
+        }
+
+        return newErrors;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const newErrors = validate();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        // Mock submission (replace with actual API call)
+        setTimeout(() => {
+            console.log('Form submitted:', formData);
+            setIsSubmitting(false);
+            setIsSubmitted(true);
+
+            // Reset form
+            setFormData({
+                name: '',
+                phone: '',
+                serviceType: '',
+                message: '',
+            });
+
+            // Clear wizard status so it can be shown again
+            clearWizardStatus();
+
+            // Reset success message after 5 seconds
+            setTimeout(() => {
+                setIsSubmitted(false);
+            }, 5000);
+        }, 1500);
+    };
+
+    return (
+        <section id="contact" className="py-20 bg-beige">
+            <div className="container mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    {/* Contact Form */}
+                    <div>
+                        <h2 className="text-4xl font-bold text-dark-text mb-4">
+                            Contáctanos
+                        </h2>
+                        <p className="text-lg text-medium-text mb-8">
+                            ¿Listo para comenzar tu proyecto? Llena el formulario y te contactaremos en menos de 24 horas.
+                        </p>
+
+                        {isSubmitted && (
+                            <div className="bg-green-500 bg-opacity-20 border border-green-500 text-green-400 p-4 rounded-lg mb-6">
+                                ¡Gracias! Nos pondremos en contacto pronto.
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Name */}
+                            <div>
+                                <label
+                                    htmlFor="name"
+                                    className="block text-dark-text font-semibold mb-2"
+                                >
+                                    Nombre Completo *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className={`w-full px-4 py-3 bg-cream text-dark-text rounded-lg border-2 ${errors.name ? 'border-red-500' : 'border-transparent'
+                                        } focus:border-gold focus:outline-none transition-colors`}
+                                    aria-invalid={!!errors.name}
+                                    aria-describedby={errors.name ? 'name-error' : undefined}
+                                />
+                                {errors.name && (
+                                    <p id="name-error" className="text-red-400 text-sm mt-1">
+                                        {errors.name}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Phone */}
+                            <div>
+                                <label
+                                    htmlFor="phone"
+                                    className="block text-dark-text font-semibold mb-2"
+                                >
+                                    Número de Teléfono *
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    className={`w-full px-4 py-3 bg-cream text-dark-text rounded-lg border-2 ${errors.phone ? 'border-red-500' : 'border-transparent'
+                                        } focus:border-gold focus:outline-none transition-colors`}
+                                    aria-invalid={!!errors.phone}
+                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
+                                />
+                                {errors.phone && (
+                                    <p id="phone-error" className="text-red-400 text-sm mt-1">
+                                        {errors.phone}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Service Type */}
+                            <div>
+                                <label
+                                    htmlFor="serviceType"
+                                    className="block text-dark-text font-semibold mb-2"
+                                >
+                                    Tipo de Servicio *
+                                </label>
+                                <select
+                                    id="serviceType"
+                                    name="serviceType"
+                                    value={formData.serviceType}
+                                    onChange={handleChange}
+                                    className={`w-full px-4 py-3 bg-cream text-dark-text rounded-lg border-2 ${errors.serviceType ? 'border-red-500' : 'border-transparent'
+                                        } focus:border-gold focus:outline-none transition-colors`}
+                                    aria-invalid={!!errors.serviceType}
+                                    aria-describedby={errors.serviceType ? 'service-error' : undefined}
+                                >
+                                    <option value="">Selecciona un servicio</option>
+                                    {serviceTypes.map((service) => (
+                                        <option key={service} value={service}>
+                                            {service}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.serviceType && (
+                                    <p id="service-error" className="text-red-400 text-sm mt-1">
+                                        {errors.serviceType}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Message */}
+                            <div>
+                                <label
+                                    htmlFor="message"
+                                    className="block text-dark-text font-semibold mb-2"
+                                >
+                                    Mensaje (Opcional)
+                                </label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    rows={4}
+                                    className="w-full px-4 py-3 bg-cream text-dark-text rounded-lg border-2 border-transparent focus:border-gold focus:outline-none transition-colors resize-none"
+                                />
+                            </div>
+
+                            {/* Submit Button */}
+                            <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${isSubmitting
+                                    ? 'bg-gray-500 cursor-not-allowed'
+                                    : 'bg-gold hover:bg-gold-dark transform hover:scale-105'
+                                    } text-white`}
+                            >
+                                {isSubmitting ? (
+                                    'Enviando...'
+                                ) : (
+                                    <>
+                                        <Send size={20} />
+                                        Enviar Mensaje
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Map & Contact Info */}
+                    <div>
+                        <div className="bg-cream rounded-lg p-6 mb-6">
+                            <h3 className="text-2xl font-bold text-dark-text mb-4">
+                                Información de Contacto
+                            </h3>
+                            <div className="space-y-4 text-medium-text">
+                                <p>
+                                    <strong className="text-dark-text">Dirección:</strong>
+                                    <br />
+                                    Calzada Vallejo, No.8, int 1261<br />
+                                    Col. Venustiano Carranza<br />
+                                    Tlalnepantla de Baz, Estado de México<br />
+                                    C.P. 54170
+                                </p>
+                                <p>
+                                    <strong className="text-dark-text">Teléfono:</strong>
+                                    <br />
+                                    <a href="tel:+525512975893" className="hover:text-gold transition-colors block">
+                                        Cel: 55 1297 5893
+                                    </a>
+                                    <a href="tel:+525553934087" className="hover:text-gold transition-colors block">
+                                        Tel: 55 5393 4087
+                                    </a>
+                                </p>
+                                <p>
+                                    <strong className="text-dark-text">Email:</strong>
+                                    <br />
+                                    contacto@sidmi.com.mx
+                                </p>
+                                <p>
+                                    <strong className="text-dark-text">Horario:</strong>
+                                    <br />
+                                    Lun-Vie: 8:00 AM - 6:00 PM
+                                    <br />
+                                    Sáb-Dom: Servicios de Emergencia 24/7
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Embedded Map Placeholder */}
+                        <div className="bg-cream rounded-lg overflow-hidden h-64">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3761.8!2d-99.1167!3d19.5167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDMxJzAwLjEiTiA5OcKwMDcnMDAuMSJX!5e0!3m2!1ses!2smx!4v1234567890"
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0 }}
+                                allowFullScreen=""
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title="Ubicación de S.I.D.M.I."
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default ContactForm;

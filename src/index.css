@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  /* Golden/Beige tones from S.I.D.M.I. logo */
+  --color-gold-dark: #B8860B;
+  /* Dark goldenrod for primary accents */
+  --color-gold: #DAA520;
+  /* Goldenrod for buttons and highlights */
+  --color-gold-light: #F0E68C;
+  /* Light golden for subtle accents */
+  --color-beige: #F5F5DC;
+  /* Beige (bone white) for backgrounds */
+  --color-cream: #FFFEF0;
+  /* Cream for cards and sections */
+  --color-dark-text: #2C2416;
+  /* Dark brown for text */
+  --color-medium-text: #5C4F3D;
+  /* Medium brown for secondary text */
+  --color-gold-pale: #FFF8DC;
+  /* Very light golden (cornsilk) for navbar text on dark backgrounds */
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #F5F5DC;
+  /* Beige background */
+  color: #2C2416;
+  /* Dark text */
+}
+
+/* Skip to main content link - Accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #DAA520;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100;
+  border-radius: 0 0 4px 0;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Focus visible styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #DAA520;
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F5DC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DAA520;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8860B;
+}
+
+/* Glassmorphism utility - High opacity for better contrast */
+.glassmorphism {
+  background: rgba(245, 245, 220, 0.95);
+  /* 95% opaque beige */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
