@@ -18,18 +18,8 @@ const FaqAccordion = () => {
     };
 
     return (
-        <section id="faq" className="py-20 bg-beige">
+        <section id="faq" className="py-20 bg-gradient-to-b from-beige to-gold-light">
             <div className="container mx-auto px-4">
-                {/* Section Header */}
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl font-bold text-dark-text mb-4">
-                        Preguntas Frecuentes
-                    </h2>
-                    <p className="text-lg text-medium-text max-w-2xl mx-auto">
-                        Encuentra respuestas a preguntas comunes sobre nuestros servicios
-                    </p>
-                </div>
-
                 {/* FAQ Accordion */}
                 <div className="max-w-3xl mx-auto space-y-4">
                     {faqs.map((faq) => {

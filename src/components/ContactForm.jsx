@@ -272,16 +272,7 @@ const ContactForm = () => {
 
                         {/* Embedded Map Placeholder */}
                         <div className="bg-cream rounded-lg overflow-hidden h-64">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3761.8!2d-99.1167!3d19.5167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDMxJzAwLjEiTiA5OcKwMDcnMDAuMSJX!5e0!3m2!1ses!2smx!4v1234567890"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen=""
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title="Ubicación de S.I.D.M.I."
-                            />
+                            <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
                         </div>
                     </div>
                 </div>

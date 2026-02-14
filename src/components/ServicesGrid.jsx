@@ -38,7 +38,7 @@ const ServicesGrid = () => {
                                 {/* Icon */}
                                 <div className="mb-4">
                                     <div className="w-16 h-16 bg-steel-blue bg-opacity-20 rounded-lg flex items-center justify-center group-hover:bg-opacity-30 transition-all">
-                                        <Icon className="text-gold" size={32} />
+                                        <Icon className="text-white" size={32} />
                                     </div>
                                 </div>
 

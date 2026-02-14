@@ -47,7 +47,7 @@ const Navbar = () => {
                         aria-label={`${companyInfo.name.short} - Ir al inicio`}
                     >
                         <img
-                            src="/logo.png"
+                            src={`${import.meta.env.BASE_URL}logo.png`}
                             alt={companyInfo.name.short}
                             className="h-12 w-auto"
                         />

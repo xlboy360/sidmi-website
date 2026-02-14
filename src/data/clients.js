@@ -1,73 +1,75 @@
 // Client logos data
+const baseUrl = import.meta.env.BASE_URL;
+
 export const clients = [
     {
         id: 1,
         name: 'Bolsa Mexicana',
-        logo: '/assets/clients/bolsa-mexicana.svg'
+        logo: `${baseUrl}assets/clients/bolsa-mexicana.svg`
     },
     {
         id: 2,
         name: 'Fide',
-        logo: '/assets/clients/fide.png'
+        logo: `${baseUrl}assets/clients/fide.png`
     },
     {
         id: 4,
         name: 'Azertia',
-        logo: '/assets/clients/azertia.png'
+        logo: `${baseUrl}assets/clients/azertia.png`
     },
     {
         id: 5,
         name: 'Grupo Crisga',
-        logo: '/assets/clients/crisga.png'
+        logo: `${baseUrl}assets/clients/crisga.png`
     },
     {
         id: 6,
         name: 'Indra',
-        logo: '/assets/clients/indra.png'
+        logo: `${baseUrl}assets/clients/indra.png`
     },
     {
         id: 9,
         name: 'Sodexo',
-        logo: '/assets/clients/sodexo.png'
+        logo: `${baseUrl}assets/clients/sodexo.png`
     },
     {
         id: 10,
         name: 'Koprimo',
-        logo: '/assets/clients/koprimo.png'
+        logo: `${baseUrl}assets/clients/koprimo.png`
     },
     {
         id: 11,
         name: 'Grupo Fabricas Selectas',
-        logo: '/assets/clients/fabricas-selectas.png'
+        logo: `${baseUrl}assets/clients/fabricas-selectas.png`
     },
     {
         id: 12,
         name: 'Importaciones Toledo',
-        logo: '/assets/clients/toledo.png'
+        logo: `${baseUrl}assets/clients/toledo.png`
     },
     {
         id: 16,
         name: 'FinComún',
-        logo: '/assets/clients/fin-comun.png'
+        logo: `${baseUrl}assets/clients/fin-comun.png`
     },
     {
         id: 18,
         name: 'Zurich',
-        logo: '/assets/clients/zurich.png'
+        logo: `${baseUrl}assets/clients/zurich.png`
     },
     {
         id: 19,
         name: 'CI Banco',
-        logo: '/assets/clients/ci-banco.svg'
+        logo: `${baseUrl}assets/clients/ci-banco.svg`
     },
     {
         id: 20,
         name: 'AOC Mexicana',
-        logo: '/assets/clients/aoc.png'
+        logo: `${baseUrl}assets/clients/aoc.png`
     },
     {
         id: 21,
         name: 'Casino Joker',
-        logo: '/assets/clients/joker.png'
+        logo: `${baseUrl}assets/clients/joker.png`
     }
 ];

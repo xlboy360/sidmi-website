@@ -67,7 +67,7 @@ const HomePage = () => {
                                 >
                                     <div className="mb-4">
                                         <div className="w-16 h-16 bg-gold bg-opacity-20 rounded-lg flex items-center justify-center group-hover:bg-opacity-30 transition-all">
-                                            <Icon className="text-gold" size={32} />
+                                            <Icon className="text-white" size={32} />
                                         </div>
                                     </div>
 
@@ -142,7 +142,7 @@ const HomePage = () => {
             </section>
 
             {/* FAQ Preview */}
-            <section className="py-20 bg-beige">
+            <section className="py-20 bg-gradient-to-b from-beige to-gold-light">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold text-dark-text mb-4">

@@ -22,8 +22,8 @@ export const companyInfo = {
         managerTitle: 'Gerente General',
     },
     about: {
-        yearsOfExperience: 16,
-        description: 'Somos una empresa mexicana con 16 años de experiencia, dedicada a proyectos, instalaciones, mantenimiento, aire acondicionado, refrigeración, equipos electromecánicos, plantas de luz; extracción y fabricación de ductos en lámina galvanizada.',
+        yearsOfExperience: 25,
+        description: 'Somos una empresa mexicana con más de 25 años de experiencia, dedicada a proyectos, instalaciones, mantenimiento, aire acondicionado, refrigeración, equipos electromecánicos, plantas de luz; extracción y fabricación de ductos en lámina galvanizada.',
         mission: 'Nos exigimos día a día para posicionarnos de manera sólida y ofrecer a nuestros clientes que exigen un servicio y equipo de primera calidad a través de una asesoría adecuada y la elaboración de proyectos de calidad, con una variedad amplia de equipos de alta calidad, utilizando tecnología de vanguardia para el desarrollo de proyectos por medio de expertos y profesionales especializados cumpliendo siempre con un compromiso de honestidad y respeto con el fin de ofrecer el confort que nuestros clientes merecen.',
         vision: 'Ser una empresa reconocida, distinguida, renombrada y demandante, en nuestro ramo a nivel Nacional. Siempre favorecidos por nuestros clientes, los cuales plenamente convencidos de la excelencia de nuestro servicio apoyan a esta empresa para su máximo desarrollo colocándola en primer lugar.',
         objective: 'Contando con el personal altamente calificado de Servicios Integrales de Mantenimiento e Instalación, nos hemos distinguido en desarrollar nuestra labor profesionalmente, nuestro objetivo continuo está enfocado a la total satisfacción de cada uno de nuestros clientes.',

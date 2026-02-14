@@ -50,7 +50,7 @@ const ServiciosPage = () => {
                                     {/* Icon */}
                                     <div className="mb-6">
                                         <div className="w-20 h-20 bg-gold bg-opacity-20 rounded-lg flex items-center justify-center group-hover:bg-opacity-30 transition-all">
-                                            <Icon className="text-gold" size={40} />
+                                            <Icon className="text-white" size={40} />
                                         </div>
                                     </div>
 
@@ -74,7 +74,7 @@ const ServiciosPage = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-16 bg-beige">
+            <section className="py-16 bg-gradient-to-b from-beige to-gold-light">
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl mx-auto text-center bg-cream p-12 rounded-lg border-2 border-gold">
                         <h2 className="text-3xl font-bold text-dark-text mb-4">

@@ -27,7 +27,7 @@ function App() {
 
   return (
     <WizardContext.Provider value={{ openWizard }}>
-      <Router>
+      <Router basename={import.meta.env.BASE_URL}>
         {/* Wizard Modal - Available on all pages */}
         <WizardModal
           isOpen={isWizardOpen}

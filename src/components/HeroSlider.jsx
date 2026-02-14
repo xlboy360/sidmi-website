@@ -12,7 +12,7 @@ const HeroSlider = () => {
             id: 1,
             image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80',
             title: 'Servicios Integrales de Mantenimiento e Instalaciones',
-            subtitle: '16 años de experiencia en el mercado mexicano',
+            subtitle: 'Más de 25 años de experiencia en el mercado mexicano',
         },
         {
             id: 2,
