@@ -69,22 +69,18 @@ export const wizardData = {
                     {
                         id: 'hogar',
                         name: 'Hogar',
-                        items: ['Restaurantes', 'Oficinas', 'Industrial']
                     },
                     {
                         id: 'restaurantes',
                         name: 'Restaurantes',
-                        items: ['Hogar', 'Oficinas', 'Industrial']
                     },
                     {
                         id: 'oficinas',
                         name: 'Oficinas',
-                        items: ['Hogar', 'Restaurantes', 'Industrial']
                     },
                     {
                         id: 'industrial',
                         name: 'Industrial',
-                        items: ['Hogar', 'Restaurantes', 'Oficinas']
                     }
                 ]
             },

@@ -41,7 +41,7 @@ const NosotrosPage = () => {
                             <p>
                                 Con el compromiso de cubrir las necesidades con la más avanzada tecnología en eficiencia y ahorro de energía, siendo usted nuestro cliente eje primordial.
                             </p>
-                            <div className="bg-beige p-6 rounded-lg border-l-4 border-gold mt-8">
+                            <div className="bg-beige p-6 rounded-lg border-l-4 border-gold mt-8 hover:scale-105 transition-all duration-300">
                                 <p className="text-sm text-medium-text mb-2">Responsable Legal</p>
                                 <p className="text-dark-text font-semibold text-lg">
                                     {companyInfo.legal.manager}

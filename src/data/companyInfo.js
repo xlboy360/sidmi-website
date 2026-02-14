@@ -11,10 +11,11 @@ export const companyInfo = {
         state: 'Estado de México',
         zipCode: '54170',
         phone: {
-            mobile: '55 1297 5893',
-            local: '55 5393 4087',
+            mobile1: '55 7326 8042',
+            mobile2: '55 1803 0475',
+            mobile3: '55 1297 5893',
         },
-        email: 'contacto@sidmi.com.mx',
+        email: 'sidmiservicios@hotmail.com',
     },
     legal: {
         rfc: 'CARB-680714-S65',

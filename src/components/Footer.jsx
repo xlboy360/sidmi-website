@@ -37,33 +37,6 @@ const Footer = () => {
                             >
                                 <Facebook size={24} />
                             </a>
-                            <a
-                                href="https://twitter.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-dark-text hover:text-gold transition-colors"
-                                aria-label="Visita nuestra página de Twitter"
-                            >
-                                <Twitter size={24} />
-                            </a>
-                            <a
-                                href="https://instagram.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-dark-text hover:text-gold transition-colors"
-                                aria-label="Visita nuestra página de Instagram"
-                            >
-                                <Instagram size={24} />
-                            </a>
-                            <a
-                                href="https://linkedin.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-dark-text hover:text-gold transition-colors"
-                                aria-label="Visita nuestra página de LinkedIn"
-                            >
-                                <Linkedin size={24} />
-                            </a>
                         </div>
                     </div>
 
@@ -154,11 +127,14 @@ const Footer = () => {
                             <li className="flex items-center gap-3 text-medium-text">
                                 <Phone className="text-gold flex-shrink-0" size={20} />
                                 <div className="text-sm">
-                                    <a href={`tel:${companyInfo.contact.phone.mobile.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block">
-                                        Cel: {companyInfo.contact.phone.mobile}
+                                    <a href={`tel:${companyInfo.contact.phone.mobile1.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block">
+                                        Cel: {companyInfo.contact.phone.mobile1}
                                     </a>
-                                    <a href={`tel:${companyInfo.contact.phone.local.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block">
-                                        Tel: {companyInfo.contact.phone.local}
+                                    <a href={`tel:${companyInfo.contact.phone.mobile2.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block">
+                                        Cel: {companyInfo.contact.phone.mobile2}
+                                    </a>
+                                    <a href={`tel:${companyInfo.contact.phone.mobile3.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block">
+                                        Cel: {companyInfo.contact.phone.mobile3}
                                     </a>
                                 </div>
                             </li>

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Send } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { emailConfig } from '../config/emailConfig';
 import { clearWizardStatus } from '../utils/localStorage';
 
 const ContactForm = () => {
@@ -63,10 +65,35 @@ const ContactForm = () => {
 
         setIsSubmitting(true);
 
-        // Mock submission (replace with actual API call)
-        setTimeout(() => {
-            console.log('Form submitted:', formData);
-            setIsSubmitting(false);
+        try {
+            // Send email via EmailJS (only if configured)
+            if (emailConfig.serviceId && emailConfig.contactTemplateId && emailConfig.publicKey) {
+                try {
+                    // Initialize EmailJS
+                    emailjs.init(emailConfig.publicKey);
+
+                    // Send email to admin
+                    await emailjs.send(
+                        emailConfig.serviceId,
+                        emailConfig.contactTemplateId,
+                        {
+                            from_name: formData.name,
+                            from_phone: formData.phone,
+                            service_type: formData.serviceType,
+                            message: formData.message || 'Sin mensaje adicional'
+                        }
+                    );
+
+                    console.log('✅ Contact form email sent successfully to admin');
+                } catch (emailError) {
+                    console.error('⚠️ Error sending email:', emailError);
+                    // Don't block the user flow if email fails
+                }
+            } else {
+                console.warn('⚠️ EmailJS not configured. Set environment variables in .env.local');
+            }
+
+            // Show success state
             setIsSubmitted(true);
 
             // Reset form
@@ -84,11 +111,17 @@ const ContactForm = () => {
             setTimeout(() => {
                 setIsSubmitted(false);
             }, 5000);
-        }, 1500);
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('❌ Hubo un error al enviar tu mensaje. Por favor intenta nuevamente o contáctanos directamente.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
-        <section id="contact" className="py-20 bg-beige">
+        <section id="contact" className="pb-20 bg-beige">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Contact Form */}
@@ -248,17 +281,20 @@ const ContactForm = () => {
                                 <p>
                                     <strong className="text-dark-text">Teléfono:</strong>
                                     <br />
+                                    <a href="tel:+525573268042" className="hover:text-gold transition-colors block">
+                                        Cel: 55 7326 8042
+                                    </a>
+                                    <a href="tel:+525518030475" className="hover:text-gold transition-colors block">
+                                        Cel: 55 1803 0475
+                                    </a>
                                     <a href="tel:+525512975893" className="hover:text-gold transition-colors block">
                                         Cel: 55 1297 5893
-                                    </a>
-                                    <a href="tel:+525553934087" className="hover:text-gold transition-colors block">
-                                        Tel: 55 5393 4087
                                     </a>
                                 </p>
                                 <p>
                                     <strong className="text-dark-text">Email:</strong>
                                     <br />
-                                    contacto@sidmi.com.mx
+                                    sidmiservicios@hotmail.com
                                 </p>
                                 <p>
                                     <strong className="text-dark-text">Horario:</strong>
@@ -271,8 +307,8 @@ const ContactForm = () => {
                         </div>
 
                         {/* Embedded Map Placeholder */}
-                        <div className="bg-cream rounded-lg overflow-hidden h-64">
-                            <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+                        <div className="bg-cream rounded-lg overflow-hidden h-64 hover:scale-105 hover:border-gold hover:border-2 transition-transform duration-300">
+                            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo" className="w-full h-full object-contain" />
                         </div>
                     </div>
                 </div>

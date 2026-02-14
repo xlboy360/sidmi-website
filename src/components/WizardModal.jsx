@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { setWizardStatus } from '../utils/localStorage';
 import { wizardData } from '../data/wizardData';
+import SuccessModal from './SuccessModal';
 import {
     emailConfig,
     formatSelectionsBreadcrumb,
@@ -31,6 +32,7 @@ const WizardModal = ({ isOpen, onClose }) => {
     });
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const modalRef = useRef(null);
     const firstFocusableRef = useRef(null);
 
@@ -64,6 +66,13 @@ const WizardModal = ({ isOpen, onClose }) => {
         return () => {
             document.body.style.overflow = 'unset';
         };
+    }, [isOpen]);
+
+    // Reset wizard state when modal opens
+    useEffect(() => {
+        if (isOpen) {
+            resetWizard();
+        }
     }, [isOpen]);
 
     const resetWizard = () => {
@@ -225,6 +234,7 @@ const WizardModal = ({ isOpen, onClose }) => {
 
     const handleBack = () => {
         if (currentStep === 'form') {
+            // Going back from form - determine which step to return to
             if (selections.item) {
                 setCurrentStep('items');
             } else if (selections.suboption) {
@@ -237,16 +247,37 @@ const WizardModal = ({ isOpen, onClose }) => {
                 setCurrentStep('category');
             }
         } else if (currentStep === 'items') {
+            // Clear item selection when going back
+            setSelections(prev => ({ ...prev, item: null }));
             setCurrentStep('suboptions');
         } else if (currentStep === 'suboptions') {
+            // Clear suboption selection when going back
+            setSelections(prev => ({ ...prev, suboption: null, item: null }));
             setCurrentStep('options');
         } else if (currentStep === 'options') {
+            // Clear option and forward selections when going back
+            setSelections(prev => ({
+                ...prev,
+                option: null,
+                suboption: null,
+                item: null,
+                multipleOptions: []
+            }));
             if (selections.subcategory) {
                 setCurrentStep('subcategory');
             } else {
                 setCurrentStep('category');
             }
         } else if (currentStep === 'subcategory') {
+            // Clear subcategory and forward selections when going back
+            setSelections(prev => ({
+                ...prev,
+                subcategory: null,
+                option: null,
+                suboption: null,
+                item: null,
+                multipleOptions: []
+            }));
             setCurrentStep('category');
         }
     };
@@ -290,57 +321,33 @@ const WizardModal = ({ isOpen, onClose }) => {
             const clientMessage = formatClientMessage(formData, breadcrumb);
             const whatsappMessage = formatWhatsAppMessage(formData, breadcrumb);
 
-            // ===== DEMO: Console logging =====
-            console.log('='.repeat(60));
-            console.log('📧 EMAIL TO S.I.D.M.I. (contacto@sidmi.com.mx)');
-            console.log('='.repeat(60));
-            console.log(sidmiMessage);
-            console.log('\n');
+            // ===== EmailJS Integration =====
+            // Only send if EmailJS is configured
+            if (emailConfig.serviceId && emailConfig.wizardTemplateId && emailConfig.publicKey) {
+                try {
+                    // Initialize EmailJS
+                    emailjs.init(emailConfig.publicKey);
 
-            console.log('='.repeat(60));
-            console.log(`📧 CONFIRMATION EMAIL TO CLIENT (${formData.correo})`);
-            console.log('='.repeat(60));
-            console.log(clientMessage);
-            console.log('\n');
-
-            console.log('='.repeat(60));
-            console.log('💬 WHATSAPP MESSAGE');
-            console.log('='.repeat(60));
-            console.log(whatsappMessage);
-            console.log('='.repeat(60));
-
-            // ===== EmailJS Integration (uncomment when configured) =====
-            /*
-            // Initialize EmailJS
-            emailjs.init(emailConfig.publicKey);
-
-            // Send email to S.I.D.M.I.
-            await emailjs.send(
-                emailConfig.serviceId,
-                emailConfig.templateIdSIDMI,
-                {
-                    to_email: emailConfig.sidmiEmail,
-                    from_name: formData.nombre,
-                    from_email: formData.correo,
-                    from_phone: formData.telefono,
-                    from_location: formData.localidad || 'No especificada',
-                    service_details: breadcrumb,
-                    message: sidmiMessage
+                    // Send email to admin only (no user confirmation to save tokens)
+                    await emailjs.send(
+                        emailConfig.serviceId,
+                        emailConfig.wizardTemplateId,
+                        {
+                            from_name: formData.nombre,
+                            from_email: formData.correo,
+                            from_phone: formData.telefono,
+                            from_location: formData.localidad || 'No especificada',
+                            service_details: breadcrumb,
+                            message: formData.localidad ? `Localidad: ${formData.localidad}` : 'Sin notas adicionales'
+                        }
+                    );
+                } catch (emailError) {
+                    console.error('⚠️ Error sending email:', emailError);
+                    // Don't block the user flow if email fails
                 }
-            );
-
-            // Send confirmation email to client
-            await emailjs.send(
-                emailConfig.serviceId,
-                emailConfig.templateIdClient,
-                {
-                    to_email: formData.correo,
-                    to_name: formData.nombre,
-                    service_details: breadcrumb,
-                    message: clientMessage
-                }
-            );
-            */
+            } else {
+                console.warn('⚠️ EmailJS not configured. Set environment variables in .env.local');
+            }
 
             // Mark wizard as completed
             setWizardStatus('completed');
@@ -348,12 +355,8 @@ const WizardModal = ({ isOpen, onClose }) => {
             // Open WhatsApp with pre-formatted message
             openWhatsApp(whatsappMessage);
 
-            // Show success message
-            alert('✅ ¡Solicitud enviada exitosamente!\n\nHemos recibido tu solicitud y te contactaremos pronto.\n\nSe abrirá WhatsApp para que puedas enviar tu mensaje directamente.');
-
-            // Reset and close wizard
-            resetWizard();
-            onClose();
+            // Show success modal
+            setShowSuccessModal(true);
 
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
@@ -511,8 +514,9 @@ const WizardModal = ({ isOpen, onClose }) => {
 
     const renderSuboptionsSelection = () => {
         const categoryData = wizardData[selections.category];
-        const subcategoryData = categoryData.subcategories.find(s => s.id === selections.subcategory);
-        const optionData = subcategoryData.options.find(o => o.id === selections.option);
+        const subcategoryData = categoryData.subcategories?.find(s => s.id === selections.subcategory);
+        const optionData = subcategoryData?.options?.find(o => o.id === selections.option) ||
+            categoryData.options?.find(o => o.id === selections.option);
 
         return (
             <div>
@@ -538,9 +542,19 @@ const WizardModal = ({ isOpen, onClose }) => {
 
     const renderItemsSelection = () => {
         const categoryData = wizardData[selections.category];
-        const subcategoryData = categoryData.subcategories.find(s => s.id === selections.subcategory);
-        const optionData = subcategoryData.options.find(o => o.id === selections.option);
-        const suboptionData = optionData.suboptions.find(so => so.id === selections.suboption);
+        const subcategoryData = categoryData.subcategories?.find(s => s.id === selections.subcategory);
+        const optionData = subcategoryData?.options?.find(o => o.id === selections.option) ||
+            categoryData.options?.find(o => o.id === selections.option);
+
+        // Items can be in suboption OR directly in option
+        let items = [];
+        if (selections.suboption) {
+            const suboptionData = optionData?.suboptions?.find(so => so.id === selections.suboption);
+            items = suboptionData?.items || [];
+        } else {
+            // If no suboption, items are directly in the option
+            items = optionData?.items || [];
+        }
 
         return (
             <div>
@@ -548,9 +562,9 @@ const WizardModal = ({ isOpen, onClose }) => {
                     Selecciona una opción
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {suboptionData.items.map((item, index) => (
+                    {items.map((item, index) => (
                         <button
-                            key={index}
+                            key={`${item}-${index}`}
                             onClick={() => handleItemSelect(item)}
                             className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group"
                         >
@@ -667,7 +681,8 @@ const WizardModal = ({ isOpen, onClose }) => {
     return (
         <AnimatePresence>
             <div
-                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                key="wizard-modal"
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4"
                 style={{
                     backgroundColor: 'rgba(184, 134, 11, 0.15)',
                     backdropFilter: 'blur(12px) brightness(0.7)',
@@ -683,7 +698,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    className="bg-cream rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+                    className="bg-cream rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto z-100"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
@@ -751,6 +766,21 @@ const WizardModal = ({ isOpen, onClose }) => {
                     )}
                 </motion.div>
             </div>
+
+            {/* Success Modal */}
+            {showSuccessModal && (
+                <SuccessModal
+                    key="success-modal"
+                    isOpen={showSuccessModal}
+                    onClose={() => {
+                        setShowSuccessModal(false);
+                        resetWizard();
+                        onClose();
+                    }}
+                    title="¡Solicitud Enviada!"
+                    message="Hemos recibido tu solicitud y te contactaremos pronto. Se abrió WhatsApp para que puedas enviar tu mensaje directamente."
+                />
+            )}
         </AnimatePresence>
     );
 };

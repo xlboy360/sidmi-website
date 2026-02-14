@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Image categories with their respective folders
 const imageCategories = [
@@ -30,12 +31,13 @@ const imageCategories = [
 
 const ProjectMasonry = () => {
     const [selectedImage, setSelectedImage] = useState(null);
+    const baseUrl = import.meta.env.BASE_URL;
 
     // Generate image paths for a category
     const getImagesForCategory = (folder, count) => {
         return Array.from({ length: count }, (_, i) => ({
             id: `${folder}-${i + 1}`,
-            src: `/assets/images/${folder}/${i + 1}.jpeg`,
+            src: `${baseUrl}assets/images/${folder}/${i + 1}.jpeg`,
             alt: `${folder} ${i + 1}`
         }));
     };
@@ -92,31 +94,48 @@ const ProjectMasonry = () => {
             </div>
 
             {/* Modal for selected image */}
-            {selectedImage && (
-                <div
-                    className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black bg-opacity-40"
-                    onClick={() => setSelectedImage(null)}
-                    role="dialog"
-                    aria-modal="true"
-                >
-                    <button
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 backdrop-blur-md bg-black/30"
                         onClick={() => setSelectedImage(null)}
-                        className="bg-steel-blue text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all hover:cursor-pointer"
+                        role="dialog"
+                        aria-modal="true"
                     >
-                        Cerrar
-                    </button>
-                    <div
-                        className="bg-beige rounded-lg max-w-4xl w-full p-6"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <img
-                            src={selectedImage.src}
-                            alt={selectedImage.alt}
-                            className="w-full max-h-[70vh] object-contain rounded-lg mb-4"
-                        />
-                    </div>
-                </div>
-            )}
+                        {/* Close Button */}
+                        <motion.button
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3, delay: 0.1 }}
+                            onClick={() => setSelectedImage(null)}
+                            className="mb-4 bg-steel-blue text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all hover:cursor-pointer shadow-lg"
+                        >
+                            Cerrar
+                        </motion.button>
+
+                        {/* Image Container */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            className="bg-beige rounded-lg max-w-4xl w-full p-6 shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <img
+                                src={selectedImage.src}
+                                alt={selectedImage.alt}
+                                className="w-full max-h-[70vh] object-contain rounded-lg"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };

@@ -6,7 +6,7 @@ import { useWizard } from '../contexts/WizardContext';
 const HeroSlider = () => {
     const { openWizard } = useWizard();
     const [currentSlide, setCurrentSlide] = useState(0);
-
+    const baseUrl = import.meta.env.BASE_URL;
     const slides = [
         {
             id: 1,
@@ -16,7 +16,7 @@ const HeroSlider = () => {
         },
         {
             id: 2,
-            image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1920&q=80',
+            image: `${baseUrl}assets/images/airInjection/1.jpeg`,
             title: 'Instalaciones de Climatización y Refrigeración',
             subtitle: 'Tecnología de vanguardia para tu confort',
         },

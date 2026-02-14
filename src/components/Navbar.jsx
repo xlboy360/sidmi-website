@@ -49,7 +49,7 @@ const Navbar = () => {
                         <img
                             src={`${import.meta.env.BASE_URL}logo.png`}
                             alt={companyInfo.name.short}
-                            className="h-12 w-auto"
+                            className="h-20 w-auto"
                         />
                     </Link>
 

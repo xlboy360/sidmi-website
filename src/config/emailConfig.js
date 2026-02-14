@@ -1,24 +1,22 @@
 // EmailJS Configuration
-// Sign up at https://www.emailjs.com/ to get your credentials
-
 export const emailConfig = {
     // Your EmailJS Service ID (from EmailJS dashboard)
-    serviceId: 'YOUR_SERVICE_ID',
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
 
-    // Template ID for emails to S.I.D.M.I.
-    templateIdSIDMI: 'YOUR_TEMPLATE_ID_SIDMI',
+    // Template ID for Wizard admin notifications
+    wizardTemplateId: import.meta.env.VITE_EMAILJS_WIZARD_TEMPLATE_ID,
 
-    // Template ID for confirmation emails to clients
-    templateIdClient: 'YOUR_TEMPLATE_ID_CLIENT',
+    // Template ID for Contact Form admin notifications
+    contactTemplateId: import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID,
 
     // Your EmailJS Public Key (from EmailJS dashboard)
-    publicKey: 'YOUR_PUBLIC_KEY',
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
 
-    // S.I.D.M.I. contact email
-    sidmiEmail: 'contacto@sidmi.com.mx',
+    // S.I.D.M.I. admin email
+    adminEmail: 'sidmiservicios@hotmail.com',
 
     // WhatsApp Business number (format: +52XXXXXXXXXX)
-    whatsappNumber: '+52XXXXXXXXXX', // Replace with actual number
+    whatsappNumber: '+525573268042', // Primary contact number
 };
 
 /**
@@ -128,7 +126,7 @@ export const formatClientMessage = (formData, breadcrumb) => {
     message += `Datos de su solicitud:\n`;
     message += `- Servicio: ${breadcrumb}\n`;
     message += `- Fecha de solicitud: ${currentDate}\n\n`;
-    message += `Si tiene alguna pregunta urgente, no dude en contactarnos directamente al correo ${emailConfig.sidmiEmail}.\n\n`;
+    message += `Si tiene alguna pregunta urgente, no dude en contactarnos directamente al correo ${emailConfig.adminEmail}.\n\n`;
     message += `Atentamente,\n`;
     message += `Equipo S.I.D.M.I.`;
 
