@@ -358,6 +358,13 @@ const WizardModal = ({ isOpen, onClose }) => {
             // Show success modal
             setShowSuccessModal(true);
 
+            // Auto-close modal after 3 seconds
+            setTimeout(() => {
+                setShowSuccessModal(false);
+                resetWizard();
+                onClose();
+            }, 5000);
+
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
             alert('❌ Hubo un error al enviar tu solicitud. Por favor intenta nuevamente o contáctanos directamente.');
@@ -408,7 +415,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                         <button
                             key={key}
                             onClick={() => handleCategorySelect(key)}
-                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group"
+                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group cursor-pointer"
                         >
                             <h4 className="text-lg font-semibold text-dark-text group-hover:text-gold transition-colors">
                                 {data.name}
@@ -433,7 +440,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                         <button
                             key={subcategory.id}
                             onClick={() => handleSubcategorySelect(subcategory.id)}
-                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group"
+                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group cursor-pointer"
                         >
                             <h4 className="text-lg font-semibold text-dark-text group-hover:text-gold transition-colors">
                                 {subcategory.name}
@@ -472,7 +479,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                             <button
                                 key={option.id}
                                 onClick={() => handleOptionSelect(option.id)}
-                                className={`p-6 rounded-lg border-2 transition-all text-left group relative ${isSelected
+                                className={`p-6 rounded-lg border-2 transition-all text-left group relative cursor-pointer ${isSelected
                                     ? 'bg-gold bg-opacity-20 border-gold'
                                     : 'bg-beige border-transparent hover:border-gold'
                                     }`}
@@ -501,7 +508,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                     <div className="mt-6 flex justify-end">
                         <button
                             onClick={() => setCurrentStep('form')}
-                            className="bg-gold text-white px-6 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all flex items-center gap-2"
+                            className="bg-gold text-white px-6 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all flex items-center gap-2 cursor-pointer"
                         >
                             Siguiente
                             <ChevronRight size={20} />
@@ -528,7 +535,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                         <button
                             key={suboption.id}
                             onClick={() => handleSuboptionSelect(suboption.id)}
-                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group"
+                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group cursor-pointer"
                         >
                             <h4 className="text-lg font-semibold text-dark-text group-hover:text-gold transition-colors">
                                 {suboption.name}
@@ -566,7 +573,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                         <button
                             key={`${item}-${index}`}
                             onClick={() => handleItemSelect(item)}
-                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group"
+                            className="p-6 bg-beige rounded-lg border-2 border-transparent hover:border-gold transition-all text-left group cursor-pointer"
                         >
                             <h4 className="text-lg font-semibold text-dark-text group-hover:text-gold transition-colors">
                                 {item}
@@ -717,7 +724,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                         <button
                             ref={firstFocusableRef}
                             onClick={handleClose}
-                            className="text-dark-text hover:text-gold transition-colors p-2 ml-4"
+                            className="text-dark-text hover:text-gold transition-colors p-2 ml-4 cursor-pointer"
                             aria-label="Cerrar asistente"
                         >
                             <X size={24} />
@@ -757,7 +764,7 @@ const WizardModal = ({ isOpen, onClose }) => {
                         <div className="px-6 pb-6">
                             <button
                                 onClick={handleBack}
-                                className="text-gold hover:text-gold-dark transition-colors flex items-center gap-2 font-medium"
+                                className="text-gold hover:text-gold-dark transition-colors flex items-center gap-2 font-medium cursor-pointer"
                             >
                                 <ChevronLeft size={20} />
                                 Atrás

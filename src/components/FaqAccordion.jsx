@@ -34,7 +34,7 @@ const FaqAccordion = () => {
                                 <button
                                     onClick={() => toggleFaq(faq.id)}
                                     onKeyDown={(e) => handleKeyDown(e, faq.id)}
-                                    className="w-full flex items-center justify-between p-6 text-left"
+                                    className="w-full flex items-center justify-between p-6 text-left cursor-pointer"
                                     aria-expanded={isOpen}
                                     aria-controls={`faq-answer-${faq.id}`}
                                 >

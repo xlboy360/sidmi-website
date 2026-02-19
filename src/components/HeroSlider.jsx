@@ -114,7 +114,7 @@ const HeroSlider = () => {
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.6 }}
                                     onClick={openWizard}
-                                    className="bg-gold text-white px-8 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all transform hover:scale-105"
+                                    className="bg-gold text-white px-8 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all transform hover:scale-105 cursor-pointer"
                                 >
                                     Cotización Gratuita
                                 </motion.button>
@@ -128,7 +128,7 @@ const HeroSlider = () => {
             <button
                 onClick={prevSlide}
                 onKeyDown={(e) => handleKeyDown(e, prevSlide)}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-gold text-white p-3 rounded-full transition-all z-10"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-gold text-white p-3 rounded-full transition-all z-10 cursor-pointer"
                 aria-label="Diapositiva anterior"
             >
                 <ChevronLeft size={24} />
@@ -137,7 +137,7 @@ const HeroSlider = () => {
             <button
                 onClick={nextSlide}
                 onKeyDown={(e) => handleKeyDown(e, nextSlide)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-gold text-white p-3 rounded-full transition-all z-10"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-gold text-white p-3 rounded-full transition-all z-10 cursor-pointer"
                 aria-label="Siguiente diapositiva"
             >
                 <ChevronRight size={24} />
@@ -150,7 +150,7 @@ const HeroSlider = () => {
                         key={index}
                         onClick={() => goToSlide(index)}
                         onKeyDown={(e) => handleKeyDown(e, () => goToSlide(index))}
-                        className={`w-3 h-3 rounded-full transition-all ${currentSlide === index
+                        className={`w-3 h-3 rounded-full transition-all cursor-pointer ${currentSlide === index
                             ? 'bg-gold w-8'
                             : 'bg-white/50 hover:bg-white/80'
                             }`}

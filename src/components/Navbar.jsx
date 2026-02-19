@@ -72,7 +72,7 @@ const Navbar = () => {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="md:hidden text-black hover:text-gold-dark transition-colors p-2"
+                        className="md:hidden text-black hover:text-gold-dark transition-colors p-2 cursor-pointer"
                         aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
                         aria-expanded={isMenuOpen}
                         aria-controls="mobile-menu"

@@ -71,5 +71,25 @@ export const clients = [
         id: 21,
         name: 'Casino Joker',
         logo: `${baseUrl}assets/clients/joker.png`
+    },
+    {
+        id: 22,
+        name: 'Chévere',
+        logo: `${baseUrl}assets/clients/chevere.png`
+    },
+    {
+        id: 23,
+        name: 'Mar del Zur',
+        logo: `${baseUrl}assets/clients/mar-del-zur.png`
+    },
+    {
+        id: 24,
+        name: 'Monumental Burguers',
+        logo: `${baseUrl}assets/clients/monumental-buguers.png`
+    },
+    {
+        id: 25,
+        name: 'Sabor Do Brazil',
+        logo: `${baseUrl}assets/clients/sabor-do-brazil.png`
     }
 ];

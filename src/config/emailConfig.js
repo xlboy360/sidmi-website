@@ -13,7 +13,7 @@ export const emailConfig = {
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
 
     // S.I.D.M.I. admin email
-    adminEmail: 'sidmiservicios@hotmail.com',
+    adminEmail: 'sidmiservicios1@gmail.com',
 
     // WhatsApp Business number (format: +52XXXXXXXXXX)
     whatsappNumber: '+525573268042', // Primary contact number

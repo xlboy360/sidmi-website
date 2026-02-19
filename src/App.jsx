@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import WizardModal from './components/WizardModal';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import ServiciosPage from './pages/ServiciosPage';
 import ProyectosPage from './pages/ProyectosPage';
@@ -28,6 +29,7 @@ function App() {
   return (
     <WizardContext.Provider value={{ openWizard }}>
       <Router basename={import.meta.env.BASE_URL}>
+        <ScrollToTop />
         {/* Wizard Modal - Available on all pages */}
         <WizardModal
           isOpen={isWizardOpen}

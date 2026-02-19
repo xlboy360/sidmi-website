@@ -85,7 +85,7 @@ const ServiciosPage = () => {
                         </p>
                         <button
                             onClick={openWizard}
-                            className="bg-gold text-white px-8 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all transform hover:scale-105"
+                            className="bg-gold text-white px-8 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all transform hover:scale-105 cursor-pointer"
                         >
                             Solicitar Cotización
                         </button>

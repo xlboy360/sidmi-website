@@ -26,6 +26,12 @@ const imageCategories = [
         title: 'Campanas de extracción',
         folder: 'extractionBells',
         imageCount: 4
+    },
+    {
+        id: 'ductCleaning',
+        title: 'Limpieza de ductos',
+        folder: 'ductCleaning',
+        imageCount: 10
     }
 ];
 

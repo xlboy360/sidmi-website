@@ -248,7 +248,7 @@ const ContactForm = () => {
                                 disabled={isSubmitting}
                                 className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${isSubmitting
                                     ? 'bg-gray-500 cursor-not-allowed'
-                                    : 'bg-gold hover:bg-gold-dark transform hover:scale-105'
+                                    : 'bg-gold hover:bg-gold-dark transform hover:scale-105 cursor-pointer'
                                     } text-white`}
                             >
                                 {isSubmitting ? (

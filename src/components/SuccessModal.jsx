@@ -27,7 +27,7 @@ const SuccessModal = ({ isOpen, onClose, title, message }) => {
                         {/* Close Button */}
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 text-medium-text hover:text-gold transition-colors"
+                            className="absolute top-4 right-4 text-medium-text hover:text-gold transition-colors cursor-pointer"
                             aria-label="Cerrar"
                         >
                             <X size={24} />
@@ -56,7 +56,7 @@ const SuccessModal = ({ isOpen, onClose, title, message }) => {
                         {/* Action Button */}
                         <button
                             onClick={onClose}
-                            className="w-full bg-gold text-white px-6 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all"
+                            className="w-full bg-gold text-white px-6 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all cursor-pointer"
                         >
                             Entendido
                         </button>

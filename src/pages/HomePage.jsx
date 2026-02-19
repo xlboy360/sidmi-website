@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import HeroSlider from '../components/HeroSlider';
 import { services } from '../data/services';
 import { faqs } from '../data/faq';
-import { projects } from '../data/projects';
+import { homepageProjects } from '../data/projects';
 import { companyInfo } from '../data/companyInfo';
 import { Wrench, Zap, Wind, Snowflake, Fan, Cog, ArrowRight } from 'lucide-react';
 
@@ -17,6 +17,8 @@ const iconMap = {
 };
 
 const HomePage = () => {
+    const baseUrl = import.meta.env.BASE_URL;
+
     return (
         <main id="main-content">
             {/* Hero Section */}
@@ -108,13 +110,13 @@ const HomePage = () => {
 
                     {/* Show first 4 projects */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        {projects.slice(0, 4).map((project) => (
+                        {homepageProjects.slice(0, 4).map((project) => (
                             <div
                                 key={project.id}
                                 className="group relative overflow-hidden rounded-lg aspect-square"
                             >
                                 <img
-                                    src={project.imageUrl}
+                                    src={`${baseUrl}${project.imageUrl}`}
                                     alt={project.title}
                                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                                     loading="lazy"
@@ -122,7 +124,7 @@ const HomePage = () => {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                                     <div>
                                         <h3 className="text-white font-bold text-lg">{project.title}</h3>
-                                        <p className="text-medium-text text-sm">{project.category}</p>
+                                        <p className="text-medium-text text-sm text-white">{project.category}</p>
                                     </div>
                                 </div>
                             </div>
