@@ -1,35 +1,36 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X, ZoomIn } from 'lucide-react';
 
 // Image categories with their respective folders
 const imageCategories = [
     {
         id: 'extraction',
-        title: 'Extracción',
+        title: 'Sistemas de Extracción y Ventilación',
         folder: 'extraction',
         imageCount: 5
     },
     {
         id: 'airInjection',
-        title: 'Inyección de aire',
+        title: 'Inyección de Aire y Climatización',
         folder: 'airInjection',
         imageCount: 16
     },
     {
         id: 'fridgeCameras',
-        title: 'Cámaras de refrigeración',
+        title: 'Cámaras Frigoríficas de Refrigeración',
         folder: 'fridgeCameras',
         imageCount: 6
     },
     {
         id: 'extractionBells',
-        title: 'Campanas de extracción',
+        title: 'Campanas Industriales de Extracción',
         folder: 'extractionBells',
         imageCount: 4
     },
     {
         id: 'ductCleaning',
-        title: 'Limpieza de ductos',
+        title: 'Limpieza y Sanitización de Ductos',
         folder: 'ductCleaning',
         imageCount: 10
     }
@@ -44,31 +45,34 @@ const ProjectMasonry = () => {
         return Array.from({ length: count }, (_, i) => ({
             id: `${folder}-${i + 1}`,
             src: `${baseUrl}assets/images/${folder}/${i + 1}.jpeg`,
-            alt: `${folder} ${i + 1}`
+            alt: `Proyecto ${folder} ${i + 1}`
         }));
     };
 
     return (
-        <section id="projects" className="py-20 bg-cream">
-            <div className="container mx-auto px-4">
+        <section id="projects" className="py-16 bg-slate-50">
+            <div className="container mx-auto px-4 max-w-7xl">
 
                 {/* Category Sections */}
                 {imageCategories.map((category) => {
                     const images = getImagesForCategory(category.folder, category.imageCount);
 
                     return (
-                        <div key={category.id} className="mb-16 last:mb-0">
+                        <div key={category.id} className="mb-20 last:mb-0">
                             {/* Category Subheader */}
-                            <h3 className="text-3xl font-bold text-dark-text mb-8 text-center">
-                                {category.title}
-                            </h3>
+                            <div className="flex items-center gap-3 mb-8">
+                                <span className="w-2.5 h-8 bg-gold rounded-full" />
+                                <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                                    {category.title}
+                                </h2>
+                            </div>
 
                             {/* Masonry Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-auto">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
                                 {images.map((image, index) => (
                                     <article
                                         key={image.id}
-                                        className={`group relative overflow-hidden rounded-lg cursor-pointer ${index % 5 === 0 ? 'row-span-2' : 'row-span-1'
+                                        className={`group relative overflow-hidden rounded-xl cursor-pointer shadow-sm bg-slate-900 ${index % 5 === 0 ? 'sm:col-span-2 sm:row-span-2' : ''
                                             }`}
                                         onClick={() => setSelectedImage(image)}
                                         onKeyDown={(e) => {
@@ -79,18 +83,22 @@ const ProjectMasonry = () => {
                                         }}
                                         tabIndex={0}
                                         role="button"
-                                        aria-label={`View ${image.alt} image`}
+                                        aria-label={`Ver imagen ampliada de ${image.alt}`}
                                     >
                                         {/* Image */}
                                         <img
                                             src={image.src}
                                             alt={image.alt}
                                             loading="lazy"
-                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                            className="w-full h-full object-cover min-h-[220px] transition-transform duration-500 group-hover:scale-105 opacity-95 group-hover:opacity-100"
                                         />
 
                                         {/* Overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                            <span className="p-3 bg-white/90 text-slate-900 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                                <ZoomIn size={22} />
+                                            </span>
+                                        </div>
                                     </article>
                                 ))}
                             </div>
@@ -106,37 +114,37 @@ const ProjectMasonry = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 backdrop-blur-md bg-black/30"
+                        transition={{ duration: 0.25 }}
+                        className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 backdrop-blur-md bg-slate-950/80"
                         onClick={() => setSelectedImage(null)}
                         role="dialog"
                         aria-modal="true"
                     >
                         {/* Close Button */}
                         <motion.button
-                            initial={{ opacity: 0, y: -20 }}
+                            initial={{ opacity: 0, y: -15 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.3, delay: 0.1 }}
+                            exit={{ opacity: 0, y: -15 }}
                             onClick={() => setSelectedImage(null)}
-                            className="mb-4 bg-steel-blue text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all hover:cursor-pointer shadow-lg"
+                            className="mb-4 bg-white/10 hover:bg-white text-white hover:text-slate-900 px-5 py-2 rounded-full transition-all cursor-pointer shadow-lg flex items-center gap-2 text-sm font-semibold border border-white/20"
                         >
-                            Cerrar
+                            <X size={18} />
+                            Cerrar Vista
                         </motion.button>
 
                         {/* Image Container */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.3, ease: "easeOut" }}
-                            className="bg-beige rounded-lg max-w-4xl w-full p-6 shadow-2xl"
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="bg-white rounded-2xl max-w-4xl w-full p-3 shadow-2xl overflow-hidden"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <img
                                 src={selectedImage.src}
                                 alt={selectedImage.alt}
-                                className="w-full max-h-[70vh] object-contain rounded-lg"
+                                className="w-full max-h-[75vh] object-contain rounded-xl"
                             />
                         </motion.div>
                     </motion.div>

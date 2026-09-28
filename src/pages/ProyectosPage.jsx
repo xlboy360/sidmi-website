@@ -3,16 +3,19 @@ import { clients } from '../data/clients';
 
 const ProyectosPage = () => {
     return (
-        <main id="main-content" className="pt-20">
+        <main id="main-content" className="pt-20 bg-slate-50">
             {/* Header */}
-            <section className="py-16 bg-gradient-to-r from-oxford-grey to-graphite">
+            <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl font-bold text-dark-text mb-6">
-                            Nuestros Proyectos
+                        <span className="text-gold font-bold text-xs uppercase tracking-widest block mb-3">
+                            Evidencia Fotográfica
+                        </span>
+                        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+                            Portafolio de Proyectos y Obras
                         </h1>
-                        <p className="text-xl text-medium-text leading-relaxed">
-                            Explora nuestro portafolio de proyectos de construcción, instalación y mantenimiento completados con éxito
+                        <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+                            Conoce algunos de nuestros trabajos en cámaras frigoríficas, ductería galvanizada, extracción e inyección de aire en campo.
                         </p>
                     </div>
                 </div>
@@ -22,33 +25,33 @@ const ProyectosPage = () => {
             <ProjectMasonry />
 
             {/* Clients Section */}
-            <section className="py-20 bg-gradient-to-b from-beige to-gold-light">
+            <section className="py-20 bg-white border-t border-slate-200">
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto">
                         {/* Section Title */}
-                        <div className="text-center mb-12">
-                            <h2 className="text-4xl font-bold text-dark-text mb-4">
-                                Nuestros Clientes
+                        <div className="text-center mb-14">
+                            <span className="text-gold font-bold text-xs uppercase tracking-wider block mb-2">
+                                Trayectoria y Respaldo
+                            </span>
+                            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
+                                Clientes que Avalan Nuestra Calidad
                             </h2>
-                            <p className="text-lg text-medium-text">
-                                Empresas que confían en nuestros servicios
+                            <p className="text-slate-600 text-base max-w-xl mx-auto">
+                                Empresas corporativas e instituciones que han depositado su confianza en las soluciones de S.I.D.M.I.
                             </p>
                         </div>
 
                         {/* Clients Grid */}
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                             {clients.map((client) => (
                                 <div
                                     key={client.id}
-                                    className="flex items-center justify-center p-6 bg-white rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl"
-                                    style={{
-                                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                                    }}
+                                    className="flex items-center justify-center p-6 bg-slate-50 border border-slate-200 rounded-xl transition-all duration-300 hover:scale-105 hover:bg-white hover:shadow-lg group"
                                 >
                                     <img
                                         src={client.logo}
                                         alt={`Logo de ${client.name}`}
-                                        className="w-full h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                                        className="w-full h-16 object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                                         loading="lazy"
                                     />
                                 </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWizard } from '../contexts/WizardContext';
 
@@ -10,21 +11,21 @@ const HeroSlider = () => {
     const slides = [
         {
             id: 1,
-            image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80',
+            image: `${baseUrl}assets/images/airInjection/1.jpeg`,
             title: 'Servicios Integrales de Mantenimiento e Instalaciones',
-            subtitle: 'Más de 25 años de experiencia en el mercado mexicano',
+            subtitle: 'Más de 25 años de excelencia industrial en climatización, refrigeración y obra electromecánica',
         },
         {
             id: 2,
-            image: `${baseUrl}assets/images/airInjection/1.jpeg`,
-            title: 'Instalaciones de Climatización y Refrigeración',
-            subtitle: 'Tecnología de vanguardia para tu confort',
+            image: `${baseUrl}assets/images/fridgeCameras/2.jpeg`,
+            title: 'Cámaras Frigoríficas y Refrigeración Comercial',
+            subtitle: 'Conservación y congelación de alta precisión para sector alimentario y farmacéutico',
         },
         {
             id: 3,
-            image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=80',
-            title: 'Mantenimiento Preventivo y Correctivo',
-            subtitle: 'Servicio profesional 24/7 para tu tranquilidad',
+            image: `${baseUrl}assets/images/extractionBells/3.jpeg`,
+            title: 'Extracción, Ventilación y Limpieza de Ductos',
+            subtitle: 'Diseño e instalación certificada en lámina galvanizada con servicio técnico especializado',
         },
     ];
 
@@ -73,7 +74,7 @@ const HeroSlider = () => {
                     />
 
                     {/* Dark Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30" />
 
                     {/* Content */}
                     <div className="relative h-full flex items-center">
@@ -87,7 +88,7 @@ const HeroSlider = () => {
                                     className="inline-block bg-black/70 px-8 py-4 rounded-xl mb-6 backdrop-blur-sm"
                                 >
                                     <h1
-                                        className="text-4xl md:text-6xl font-bold text-white"
+                                        className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-tight"
                                         style={{ textShadow: '3px 3px 8px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 0, 0, 0.6)' }}
                                     >
                                         {slides[currentSlide].title}
@@ -102,22 +103,33 @@ const HeroSlider = () => {
                                     className="inline-block bg-black/60 px-6 py-3 rounded-lg mb-8 backdrop-blur-sm"
                                 >
                                     <p
-                                        className="text-xl md:text-2xl text-white"
+                                        className="text-lg md:text-xl text-white"
                                         style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5)' }}
                                     >
                                         {slides[currentSlide].subtitle}
                                     </p>
                                 </motion.div>
 
-                                <motion.button
+                                <motion.div
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.6 }}
-                                    onClick={openWizard}
-                                    className="bg-gold text-white px-8 py-3 rounded-lg font-semibold hover:bg-gold-dark transition-all transform hover:scale-105 cursor-pointer"
+                                    className="flex flex-wrap gap-4 items-center"
                                 >
-                                    Cotización Gratuita
-                                </motion.button>
+                                    <button
+                                        onClick={openWizard}
+                                        className="bg-gold text-white px-8 py-3.5 rounded-lg font-semibold hover:bg-gold-dark transition-all transform hover:scale-105 cursor-pointer shadow-xl flex items-center gap-2"
+                                    >
+                                        Cotización Gratuita
+                                        <ArrowRight size={18} />
+                                    </button>
+                                    <Link
+                                        to="/servicios"
+                                        className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-md px-6 py-3.5 rounded-lg font-semibold border border-white/30 transition-all hover:scale-105"
+                                    >
+                                        Nuestros Servicios
+                                    </Link>
+                                </motion.div>
                             </div>
                         </div>
                     </div>

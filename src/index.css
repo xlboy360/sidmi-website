@@ -1,23 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* Golden/Beige tones from S.I.D.M.I. logo */
-  --color-gold-dark: #B8860B;
-  /* Dark goldenrod for primary accents */
-  --color-gold: #DAA520;
-  /* Goldenrod for buttons and highlights */
-  --color-gold-light: #F0E68C;
-  /* Light golden for subtle accents */
-  --color-beige: #F5F5DC;
-  /* Beige (bone white) for backgrounds */
-  --color-cream: #FFFEF0;
-  /* Cream for cards and sections */
-  --color-dark-text: #2C2416;
-  /* Dark brown for text */
-  --color-medium-text: #5C4F3D;
-  /* Medium brown for secondary text */
-  --color-gold-pale: #FFF8DC;
-  /* Very light golden (cornsilk) for navbar text on dark backgrounds */
+  /* Modern B2B Industrial Palette - S.I.D.M.I. */
+  --color-gold: #D97706;
+  --color-gold-dark: #B45309;
+  --color-gold-light: #FDE68A;
+  --color-gold-pale: #FEF3C7;
+
+  /* Industrial Slate / Dark tones */
+  --color-oxford-grey: #0F172A;
+  --color-graphite: #1E293B;
+  --color-steel-blue: #0284C7;
+
+  /* Clean Surfaces (modernized from muddy beige to crisp high-contrast corporate surfaces) */
+  --color-cream: #FFFFFF;
+  --color-beige: #F8FAFC;
+  --color-surface-subtle: #F1F5F9;
+
+  /* Typography */
+  --color-dark-text: #0F172A;
+  --color-medium-text: #475569;
 }
 
 /* Global Styles */
@@ -26,11 +28,9 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #F5F5DC;
-  /* Beige background */
-  color: #2C2416;
-  /* Dark text */
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F8FAFC;
+  color: #0F172A;
 }
 
 /* Skip to main content link - Accessibility */
@@ -38,13 +38,14 @@ body {
   position: absolute;
   top: -40px;
   left: 0;
-  background: #DAA520;
-  color: white;
+  background: #D97706;
+  color: #FFFFFF;
   padding: 8px 16px;
   text-decoration: none;
   z-index: 100;
   border-radius: 0 0 4px 0;
   font-weight: 700;
+  transition: top 0.2s ease;
 }
 
 .skip-link:focus {
@@ -53,34 +54,33 @@ body {
 
 /* Focus visible styles for accessibility */
 *:focus-visible {
-  outline: 2px solid #DAA520;
+  outline: 2px solid #D97706;
   outline-offset: 2px;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F5DC;
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #DAA520;
-  border-radius: 5px;
+  background: #CBD5E1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B8860B;
+  background: #94A3B8;
 }
 
-/* Glassmorphism utility - High opacity for better contrast */
+/* Glassmorphism utility - Clean modern navbar and overlays */
 .glassmorphism {
-  background: rgba(245, 245, 220, 0.95);
-  /* 95% opaque beige */
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(218, 165, 32, 0.3);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 }

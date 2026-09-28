@@ -1,0 +1,35 @@
+{
+  "name": "SIDMI Website Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "npm install && mkdir -p ~/.antigravity-server/bin && ln -s ~/.antigravity-server/bin/*-* ~/.antigravity-server/bin/$(ls ~/.antigravity-server/bin/ | awk -F'-' '{print $2}')",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gemini,target=/home/node/.gemini,type=bind,consistency=cached"
+  ],
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "tailwindCSS.experimental.classRegex": [
+          ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+        ]
+      },
+      "extensions": [
+        "google.antigravity",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "formulahendry.auto-rename-tag",
+        "dsznajder.es7-react-js-snippets"
+      ]
+    }
+  }
+}

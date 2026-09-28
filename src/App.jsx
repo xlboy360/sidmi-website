@@ -10,6 +10,7 @@ import ProyectosPage from './pages/ProyectosPage';
 import FaqPage from './pages/FaqPage';
 import NosotrosPage from './pages/NosotrosPage';
 import ContactoPage from './pages/ContactoPage';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import { shouldShowWizard } from './utils/localStorage';
 import { WizardContext } from './contexts/WizardContext';
 
@@ -51,6 +52,9 @@ function App() {
 
         {/* Footer */}
         <Footer />
+
+        {/* WhatsApp Floating Action Button */}
+        <FloatingWhatsApp />
       </Router>
     </WizardContext.Provider>
   );
