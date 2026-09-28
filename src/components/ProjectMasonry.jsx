@@ -41,11 +41,11 @@ const ProjectMasonry = () => {
     const baseUrl = import.meta.env.BASE_URL;
 
     // Generate image paths for a category
-    const getImagesForCategory = (folder, count) => {
-        return Array.from({ length: count }, (_, i) => ({
-            id: `${folder}-${i + 1}`,
-            src: `${baseUrl}assets/images/${folder}/${i + 1}.jpeg`,
-            alt: `Proyecto ${folder} ${i + 1}`
+    const getImagesForCategory = (category) => {
+        return Array.from({ length: category.imageCount }, (_, i) => ({
+            id: `${category.folder}-${i + 1}`,
+            src: `${baseUrl}assets/images/${category.folder}/${i + 1}.jpeg`,
+            alt: `Obra de ${category.title} realizada por S.I.D.M.I. - Imagen ${i + 1}`
         }));
     };
 
@@ -55,7 +55,7 @@ const ProjectMasonry = () => {
 
                 {/* Category Sections */}
                 {imageCategories.map((category) => {
-                    const images = getImagesForCategory(category.folder, category.imageCount);
+                    const images = getImagesForCategory(category);
 
                     return (
                         <div key={category.id} className="mb-20 last:mb-0">

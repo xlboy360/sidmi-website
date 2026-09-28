@@ -1,9 +1,15 @@
 import ProjectMasonry from '../components/ProjectMasonry';
 import { clients } from '../data/clients';
+import SEO from '../components/SEO';
 
 const ProyectosPage = () => {
     return (
         <main id="main-content" className="pt-20 bg-slate-50">
+            <SEO
+                title="Portafolio de Proyectos y Obras Realizadas"
+                description="Conoce nuestros proyectos ejecutados de cuartos fríos, sistemas de extracción en cocinas industriales, ductos de aire y climatización en México."
+                canonical="/proyectos"
+            />
             {/* Header */}
             <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white">
                 <div className="container mx-auto px-4">

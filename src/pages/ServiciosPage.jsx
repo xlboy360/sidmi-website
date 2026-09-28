@@ -1,6 +1,7 @@
 import { allServices } from '../data/services';
 import { Wrench, Zap, Wind, Snowflake, Fan, Cog, Package, Droplets, Sparkles, Thermometer, ArrowRight } from 'lucide-react';
 import { useWizard } from '../contexts/WizardContext';
+import SEO from '../components/SEO';
 
 // Icon mapping
 const iconMap = {
@@ -21,6 +22,11 @@ const ServiciosPage = () => {
 
     return (
         <main id="main-content" className="pt-20 bg-slate-50">
+            <SEO
+                title="Servicios Especializados en Climatización y Refrigeración"
+                description="Instalación, mantenimiento y reparación de aire acondicionado comercial, cámaras frigoríficas, ductería galvanizada y sistemas de extracción en México."
+                canonical="/servicios"
+            />
             {/* Header */}
             <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white">
                 <div className="container mx-auto px-4">

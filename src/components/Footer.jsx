@@ -94,6 +94,16 @@ const Footer = () => {
                                     Contacto y Cotizaciones
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/privacidad" className="text-slate-300 hover:text-gold transition-colors block py-0.5">
+                                    Aviso de Privacidad
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/terminos" className="text-slate-300 hover:text-gold transition-colors block py-0.5">
+                                    Términos y Condiciones
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 
@@ -140,8 +150,17 @@ const Footer = () => {
                     <p>
                         © {currentYear} {companyInfo.name.full}. Todos los derechos reservados.
                     </p>
+                    <div className="flex items-center gap-3">
+                        <Link to="/privacidad" className="hover:text-gold transition-colors">
+                            Aviso de Privacidad
+                        </Link>
+                        <span className="text-slate-600">|</span>
+                        <Link to="/terminos" className="hover:text-gold transition-colors">
+                            Términos y Condiciones
+                        </Link>
+                    </div>
                     <p className="text-slate-500">
-                        RFC: <span className="text-slate-400">{companyInfo.legal.rfc}</span> | {companyInfo.legal.manager} ({companyInfo.legal.managerTitle})
+                        RFC: <span className="text-slate-400">{companyInfo.legal.rfc}</span> | {companyInfo.legal.manager}
                     </p>
                 </div>
             </div>

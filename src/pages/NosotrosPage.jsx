@@ -1,10 +1,16 @@
 import { companyInfo } from '../data/companyInfo';
 import { Target, Eye, Award, Users, CheckCircle2, Shield, HeartHandshake, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const NosotrosPage = () => {
     return (
         <main id="main-content" className="pt-20 bg-slate-50">
+            <SEO
+                title="Quiénes Somos - 25 Años de Experiencia en Ingeniería y Mantenimiento"
+                description="Conoce la historia, misión, valores y certificaciones de S.I.D.M.I. Más de 25 años brindando soluciones de ingeniería electromecánica en México."
+                canonical="/nosotros"
+            />
             {/* Header */}
             <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white">
                 <div className="container mx-auto px-4">

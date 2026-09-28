@@ -1,2 +1,6 @@
+# Robots.txt for S.I.D.M.I.
 User-agent: *
 Allow: /
+
+# Sitemaps
+Sitemap: https://sidmi.com.mx/sitemap.xml

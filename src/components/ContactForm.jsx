@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Send } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Send, AlertTriangle, MessageCircle, Phone, CheckCircle2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { emailConfig } from '../config/emailConfig';
 import { clearWizardStatus } from '../utils/localStorage';
+import { trackEvent } from '../utils/analytics';
 
 const ContactForm = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -12,6 +15,7 @@ const ContactForm = () => {
         message: '',
     });
     const [errors, setErrors] = useState({});
+    const [submitError, setSubmitError] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -29,9 +33,12 @@ const ContactForm = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // Clear error when user starts typing
+        // Clear errors when typing
         if (errors[name]) {
             setErrors({ ...errors, [name]: '' });
+        }
+        if (submitError) {
+            setSubmitError(null);
         }
     };
 
@@ -39,17 +46,20 @@ const ContactForm = () => {
         const newErrors = {};
 
         if (!formData.name.trim()) {
-            newErrors.name = 'El nombre es requerido';
+            newErrors.name = 'El nombre o empresa es requerido';
+        } else if (formData.name.trim().length < 3) {
+            newErrors.name = 'Por favor ingresa al menos 3 caracteres';
         }
 
+        const cleanPhone = formData.phone.replace(/[\s\-()]/g, '');
         if (!formData.phone.trim()) {
-            newErrors.phone = 'El número de teléfono es requerido';
-        } else if (!/^\+?[\d\s\-()]+$/.test(formData.phone)) {
-            newErrors.phone = 'Por favor ingresa un número de teléfono válido';
+            newErrors.phone = 'El número de teléfono o WhatsApp es requerido';
+        } else if (!/^\+?\d{10,14}$/.test(cleanPhone)) {
+            newErrors.phone = 'Ingresa un número válido de 10 dígitos (ej. 55 1234 5678)';
         }
 
         if (!formData.serviceType) {
-            newErrors.serviceType = 'Por favor selecciona un tipo de servicio';
+            newErrors.serviceType = 'Por favor selecciona el servicio requerido';
         }
 
         return newErrors;
@@ -57,6 +67,7 @@ const ContactForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitError(null);
 
         const newErrors = validate();
         if (Object.keys(newErrors).length > 0) {
@@ -67,7 +78,13 @@ const ContactForm = () => {
         setIsSubmitting(true);
 
         try {
-            // Send email via EmailJS (only if configured)
+            // Track submission attempt
+            trackEvent('form_submit_attempt', {
+                event_category: 'Lead',
+                event_label: formData.serviceType
+            });
+
+            // Send email via EmailJS (if configured)
             if (emailConfig.serviceId && emailConfig.contactTemplateId && emailConfig.publicKey) {
                 try {
                     emailjs.init(emailConfig.publicKey);
@@ -82,17 +99,24 @@ const ContactForm = () => {
                             message: formData.message || 'Sin mensaje adicional'
                         }
                     );
-
-                    console.log('✅ Contact form email sent successfully to admin');
+                    console.log('✅ Contact form email sent successfully');
                 } catch (emailError) {
-                    console.error('⚠️ Error sending email:', emailError);
+                    console.error('⚠️ Error sending email via EmailJS:', emailError);
+                    // Do not break completely, but let's notify fallback if needed
                 }
             } else {
                 console.warn('⚠️ EmailJS not configured. Set environment variables in .env.local');
             }
 
-            // Show success state
+            // Success state
             setIsSubmitted(true);
+            clearWizardStatus();
+
+            // Track successful conversion
+            trackEvent('generate_lead', {
+                event_category: 'Lead',
+                event_label: formData.serviceType
+            });
 
             // Reset form
             setFormData({
@@ -102,15 +126,19 @@ const ContactForm = () => {
                 message: '',
             });
 
-            clearWizardStatus();
-
+            // Redirect to Thank You page after 1.5s
             setTimeout(() => {
-                setIsSubmitted(false);
-            }, 5000);
+                navigate('/gracias');
+            }, 1200);
 
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert('❌ Hubo un error al enviar tu mensaje. Por favor intenta nuevamente o contáctanos directamente.');
+            setSubmitError({
+                message: 'No pudimos enviar tu mensaje automáticamente debido a un error de conexión.',
+                whatsappUrl: `https://wa.me/525573268042?text=${encodeURIComponent(
+                    `Hola S.I.D.M.I., intenté cotizar por la página web:\n\n*Nombre:* ${formData.name}\n*Teléfono:* ${formData.phone}\n*Servicio:* ${formData.serviceType}\n*Detalles:* ${formData.message || 'Sin mensaje'}`
+                )}`
+            });
         } finally {
             setIsSubmitting(false);
         }
@@ -132,12 +160,56 @@ const ContactForm = () => {
                             ¿Tienes un proyecto de climatización, refrigeración o mantenimiento? Llena el formulario y un especialista te responderá a la brevedad.
                         </p>
 
+                        {/* Error Banner with WhatsApp / Phone Fallback */}
+                        {submitError && (
+                            <div
+                                role="alert"
+                                aria-live="assertive"
+                                className="bg-red-50 border border-red-300 text-red-900 p-5 rounded-xl mb-6 shadow-sm animate-in fade-in"
+                            >
+                                <div className="flex items-start gap-3">
+                                    <AlertTriangle className="text-red-600 flex-shrink-0 mt-0.5" size={22} />
+                                    <div className="space-y-2">
+                                        <p className="font-bold text-red-950 text-sm">
+                                            {submitError.message}
+                                        </p>
+                                        <p className="text-xs text-red-800 leading-relaxed">
+                                            Para asegurar que recibas tu cotización sin demora, comunícate directamente con nuestro equipo de ingeniería por WhatsApp o teléfono:
+                                        </p>
+                                        <div className="flex flex-wrap gap-2 pt-2">
+                                            <a
+                                                href={submitError.whatsappUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow transition-colors"
+                                            >
+                                                <MessageCircle size={15} />
+                                                Enviar por WhatsApp directo
+                                            </a>
+                                            <a
+                                                href="tel:+525573268042"
+                                                className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow transition-colors"
+                                            >
+                                                <Phone size={15} />
+                                                Llamar: 55 7326 8042
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Success Notification */}
                         {isSubmitted && (
-                            <div className="bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl mb-6 flex items-center gap-3">
-                                <span className="text-xl">✅</span>
+                            <div
+                                role="status"
+                                aria-live="polite"
+                                className="bg-emerald-50 border border-emerald-300 text-emerald-900 p-4 rounded-xl mb-6 flex items-center gap-3 shadow-sm"
+                            >
+                                <CheckCircle2 className="text-emerald-600 flex-shrink-0" size={24} />
                                 <div>
-                                    <p className="font-bold">¡Mensaje recibido con éxito!</p>
-                                    <p className="text-xs text-emerald-700">Nos pondremos en contacto contigo en menos de 24 horas hábiles.</p>
+                                    <p className="font-bold text-sm">¡Mensaje recibido con éxito!</p>
+                                    <p className="text-xs text-emerald-800">Redirigiendo a la confirmación del servicio...</p>
                                 </div>
                             </div>
                         )}

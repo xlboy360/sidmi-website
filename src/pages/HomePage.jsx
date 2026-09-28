@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import HeroSlider from '../components/HeroSlider';
 import { services } from '../data/services';
 import { faqs } from '../data/faq';
@@ -27,6 +28,11 @@ const HomePage = () => {
 
     return (
         <main id="main-content" className="bg-beige">
+            <SEO
+                title="Climatización, Refrigeración y Mantenimiento Industrial"
+                description="Más de 25 años de experiencia en instalación y mantenimiento de aire acondicionado, refrigeración comercial, ductería e ingeniería electromecánica en México."
+                canonical="/"
+            />
             {/* Hero Section with authentic project photos */}
             <HeroSlider />
 
@@ -222,7 +228,7 @@ const HomePage = () => {
                             >
                                 <img
                                     src={`${baseUrl}${project.imageUrl}`}
-                                    alt={project.title}
+                                    alt={`${project.title} - ${project.category} por S.I.D.M.I.`}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                                     loading="lazy"
                                 />

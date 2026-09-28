@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, ChevronRight, ChevronLeft, Check } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Check, AlertTriangle, MessageCircle, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { setWizardStatus } from '../utils/localStorage';
@@ -31,6 +31,7 @@ const WizardModal = ({ isOpen, onClose }) => {
         localidad: ''
     });
     const [formErrors, setFormErrors] = useState({});
+    const [submitError, setSubmitError] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const modalRef = useRef(null);
@@ -92,6 +93,7 @@ const WizardModal = ({ isOpen, onClose }) => {
             localidad: ''
         });
         setFormErrors({});
+        setSubmitError(null);
     };
 
     // Generate breadcrumb from selections
@@ -367,7 +369,12 @@ const WizardModal = ({ isOpen, onClose }) => {
 
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
-            alert('❌ Hubo un error al enviar tu solicitud. Por favor intenta nuevamente o contáctanos directamente.');
+            const breadcrumb = formatSelectionsBreadcrumb(selections, wizardData);
+            const whatsappMessage = formatWhatsAppMessage(formData, breadcrumb);
+            setSubmitError({
+                message: 'No pudimos registrar tu cotización automáticamente.',
+                whatsappUrl: `https://wa.me/525573268042?text=${encodeURIComponent(whatsappMessage)}`
+            });
         } finally {
             setIsSubmitting(false);
         }
@@ -591,6 +598,43 @@ const WizardModal = ({ isOpen, onClose }) => {
                 <h3 className="text-xl font-semibold text-dark-text mb-6">
                     Completa tus datos para recibir tu cotización
                 </h3>
+
+                {submitError && (
+                    <div
+                        role="alert"
+                        aria-live="assertive"
+                        className="bg-red-50 border border-red-300 text-red-900 p-4 rounded-xl mb-5 shadow-sm"
+                    >
+                        <div className="flex items-start gap-2.5">
+                            <AlertTriangle className="text-red-600 flex-shrink-0 mt-0.5" size={20} />
+                            <div className="space-y-1.5">
+                                <p className="font-bold text-red-950 text-sm">{submitError.message}</p>
+                                <p className="text-xs text-red-800 leading-relaxed">
+                                    Puedes enviarnos directamente los datos de tu cotización por WhatsApp con un solo clic:
+                                </p>
+                                <div className="flex flex-wrap gap-2 pt-1">
+                                    <a
+                                        href={submitError.whatsappUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow transition-colors"
+                                    >
+                                        <MessageCircle size={14} />
+                                        Enviar por WhatsApp
+                                    </a>
+                                    <a
+                                        href="tel:+525573268042"
+                                        className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-2 rounded-lg shadow transition-colors"
+                                    >
+                                        <Phone size={14} />
+                                        Llamar al 55 7326 8042
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="nombre" className="block text-sm font-medium text-dark-text mb-2">

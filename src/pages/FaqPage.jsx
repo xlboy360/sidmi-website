@@ -1,8 +1,14 @@
 import FaqAccordion from '../components/FaqAccordion';
+import SEO from '../components/SEO';
 
 const FaqPage = () => {
     return (
         <main id="main-content" className="pt-20 bg-slate-50">
+            <SEO
+                title="Preguntas Frecuentes sobre Climatización e Instalaciones"
+                description="Respuestas sobre garantías de obra, pólizas de mantenimiento, tiempos de respuesta, cotizaciones y cobertura técnica en México."
+                canonical="/faq"
+            />
             {/* Header */}
             <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white">
                 <div className="container mx-auto px-4">

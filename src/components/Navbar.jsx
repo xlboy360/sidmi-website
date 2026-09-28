@@ -65,7 +65,7 @@ const Navbar = () => {
                     >
                         <img
                             src="/logo.png"
-                            alt={companyInfo.name.short}
+                            alt={`${companyInfo.name.short} - ${companyInfo.name.full}`}
                             className="h-14 md:h-16 w-auto object-contain drop-shadow"
                         />
                     </Link>
@@ -147,6 +147,7 @@ const Navbar = () => {
                                     <li key={link.path} role="none">
                                         <Link
                                             to={link.path}
+                                            onClick={() => setIsMenuOpen(false)}
                                             className={`block w-full text-left font-semibold transition-colors py-2 px-3 rounded-lg text-sm ${isActive
                                                 ? 'bg-amber-50 text-gold font-bold'
                                                 : 'text-slate-700 hover:bg-slate-50 hover:text-gold'

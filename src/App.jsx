@@ -10,7 +10,13 @@ import ProyectosPage from './pages/ProyectosPage';
 import FaqPage from './pages/FaqPage';
 import NosotrosPage from './pages/NosotrosPage';
 import ContactoPage from './pages/ContactoPage';
+import PoliticaPrivacidadPage from './pages/PoliticaPrivacidadPage';
+import TerminosCondicionesPage from './pages/TerminosCondicionesPage';
+import NotFoundPage from './pages/NotFoundPage';
+import ThankYouPage from './pages/ThankYouPage';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import CookieBanner from './components/CookieBanner';
+import AnalyticsTracker from './components/AnalyticsTracker';
 import { shouldShowWizard } from './utils/localStorage';
 import { WizardContext } from './contexts/WizardContext';
 
@@ -31,6 +37,8 @@ function App() {
     <WizardContext.Provider value={{ openWizard }}>
       <Router>
         <ScrollToTop />
+        <AnalyticsTracker />
+
         {/* Wizard Modal - Available on all pages */}
         <WizardModal
           isOpen={isWizardOpen}
@@ -48,13 +56,19 @@ function App() {
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/nosotros" element={<NosotrosPage />} />
           <Route path="/contacto" element={<ContactoPage />} />
+          <Route path="/privacidad" element={<PoliticaPrivacidadPage />} />
+          <Route path="/terminos" element={<TerminosCondicionesPage />} />
+          <Route path="/gracias" element={<ThankYouPage />} />
+          {/* 404 Route */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
 
         {/* Footer */}
         <Footer />
 
-        {/* WhatsApp Floating Action Button */}
+        {/* Interactive Features */}
         <FloatingWhatsApp />
+        <CookieBanner />
       </Router>
     </WizardContext.Provider>
   );

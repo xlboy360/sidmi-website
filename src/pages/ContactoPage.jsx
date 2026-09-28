@@ -1,8 +1,14 @@
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 
 const ContactoPage = () => {
     return (
         <main id="main-content" className="pt-20 bg-slate-50">
+            <SEO
+                title="Contacto y Cotizaciones Inmediatas"
+                description="Solicita una cotización o visita técnica en CDMX y Estado de México. Asesoría en aire acondicionado, cámaras frigoríficas y ventilación industrial."
+                canonical="/contacto"
+            />
             {/* Header */}
             <section className="py-20 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white">
                 <div className="container mx-auto px-4">
