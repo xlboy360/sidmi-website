@@ -8,7 +8,7 @@
       "onAutoForward": "openBrowser"
     }
   },
-  "postCreateCommand": "npm install && mkdir -p ~/.antigravity-server/bin && ln -s ~/.antigravity-server/bin/*-* ~/.antigravity-server/bin/$(ls ~/.antigravity-server/bin/ | awk -F'-' '{print $2}')",
+  "postCreateCommand": "npm install && (mkdir -p ~/.antigravity-server/bin && ln -sf ~/.antigravity-server/bin/*-* ~/.antigravity-server/bin/$(ls ~/.antigravity-server/bin/ 2>/dev/null | awk -F'-' '{print $2}') 2>/dev/null || true)",
   "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gemini,target=/home/node/.gemini,type=bind,consistency=cached"
   ],
@@ -28,7 +28,8 @@
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss",
         "formulahendry.auto-rename-tag",
-        "dsznajder.es7-react-js-snippets"
+        "dsznajder.es7-react-js-snippets",
+        "antigravity.antigravity-vscode"
       ]
     }
   }

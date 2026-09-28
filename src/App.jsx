@@ -29,7 +29,7 @@ function App() {
 
   return (
     <WizardContext.Provider value={{ openWizard }}>
-      <Router basename={import.meta.env.BASE_URL}>
+      <Router>
         <ScrollToTop />
         {/* Wizard Modal - Available on all pages */}
         <WizardModal
