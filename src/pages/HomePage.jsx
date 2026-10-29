@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import HeroSlider from '../components/HeroSlider';
@@ -22,6 +23,11 @@ const iconMap = {
 const HomePage = () => {
     const baseUrl = import.meta.env.BASE_URL;
     const { openWizard } = useWizard();
+    const [activeClientId, setActiveClientId] = useState(null);
+
+    const handleClientClick = (id) => {
+        setActiveClientId((prev) => (prev === id ? null : id));
+    };
 
     // Featured clients for homepage (top brands)
     const featuredClients = clients.slice(0, 10);
@@ -43,20 +49,42 @@ const HomePage = () => {
                         Empresas e instituciones que confían en S.I.D.M.I.
                     </p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-items-center">
-                        {featuredClients.map((client) => (
-                            <div
-                                key={client.id}
-                                className="w-full h-16 p-3 flex items-center justify-center filter grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                                title={client.name}
-                            >
-                                <img
-                                    src={client.logo}
-                                    alt={`Logo de ${client.name}`}
-                                    className="max-h-12 max-w-full object-contain"
-                                    loading="lazy"
-                                />
-                            </div>
-                        ))}
+                        {featuredClients.map((client) => {
+                            const isActive = activeClientId === client.id;
+                            return (
+                                <div
+                                    key={client.id}
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={() => handleClientClick(client.id)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            handleClientClick(client.id);
+                                        }
+                                    }}
+                                    aria-pressed={isActive}
+                                    aria-label={`Cliente ${client.name}`}
+                                    title={client.name}
+                                    className={`w-full h-16 p-3 rounded-xl flex items-center justify-center transition-all duration-300 cursor-pointer select-none group border ${
+                                        isActive
+                                            ? 'scale-110 bg-slate-50 shadow-md border-amber-400 ring-2 ring-amber-400/20'
+                                            : 'border-transparent hover:scale-105 hover:bg-slate-50 hover:shadow-sm active:scale-105 active:bg-slate-50'
+                                    }`}
+                                >
+                                    <img
+                                        src={client.logo}
+                                        alt={`Logo de ${client.name}`}
+                                        className={`max-h-12 max-w-full object-contain transition-all duration-300 ${
+                                            isActive
+                                                ? 'grayscale-0 opacity-100'
+                                                : 'grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 group-active:grayscale-0 group-active:opacity-100'
+                                        }`}
+                                        loading="lazy"
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

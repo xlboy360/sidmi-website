@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import ProjectMasonry from '../components/ProjectMasonry';
 import { clients } from '../data/clients';
 import SEO from '../components/SEO';
 
 const ProyectosPage = () => {
+    const [activeClientId, setActiveClientId] = useState(null);
+
+    const handleClientClick = (id) => {
+        setActiveClientId((prev) => (prev === id ? null : id));
+    };
+
     return (
         <main id="main-content" className="pt-20 bg-slate-50">
             <SEO
@@ -49,19 +56,41 @@ const ProyectosPage = () => {
 
                         {/* Clients Grid */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                            {clients.map((client) => (
-                                <div
-                                    key={client.id}
-                                    className="flex items-center justify-center p-6 bg-slate-50 border border-slate-200 rounded-xl transition-all duration-300 hover:scale-105 hover:bg-white hover:shadow-lg group"
-                                >
-                                    <img
-                                        src={client.logo}
-                                        alt={`Logo de ${client.name}`}
-                                        className="w-full h-16 object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                                        loading="lazy"
-                                    />
-                                </div>
-                            ))}
+                            {clients.map((client) => {
+                                const isActive = activeClientId === client.id;
+                                return (
+                                    <div
+                                        key={client.id}
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={() => handleClientClick(client.id)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                handleClientClick(client.id);
+                                            }
+                                        }}
+                                        aria-pressed={isActive}
+                                        aria-label={`Cliente ${client.name}`}
+                                        className={`flex items-center justify-center p-6 rounded-xl transition-all duration-300 cursor-pointer select-none group border ${
+                                            isActive
+                                                ? 'scale-105 bg-white shadow-xl border-amber-400 ring-2 ring-amber-400/20'
+                                                : 'bg-slate-50 border-slate-200 hover:scale-105 hover:bg-white hover:shadow-lg active:scale-105 active:bg-white active:shadow-lg'
+                                        }`}
+                                    >
+                                        <img
+                                            src={client.logo}
+                                            alt={`Logo de ${client.name}`}
+                                            className={`w-full h-16 object-contain transition-all duration-300 ${
+                                                isActive
+                                                    ? 'grayscale-0 opacity-100'
+                                                    : 'grayscale group-hover:grayscale-0 group-active:grayscale-0 opacity-80 group-hover:opacity-100'
+                                            }`}
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

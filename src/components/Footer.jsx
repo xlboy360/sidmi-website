@@ -129,6 +129,9 @@ const Footer = () => {
                                     <a href={`tel:${companyInfo.contact.phone.mobile2.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block text-xs text-slate-400">
                                         {companyInfo.contact.phone.mobile2}
                                     </a>
+                                    <a href={`tel:${companyInfo.contact.phone.mobile3.replace(/\s/g, '')}`} className="hover:text-gold transition-colors block text-xs text-slate-400">
+                                        {companyInfo.contact.phone.mobile3}
+                                    </a>
                                 </div>
                             </li>
                             <li className="flex items-center gap-3 text-slate-300 text-sm">
